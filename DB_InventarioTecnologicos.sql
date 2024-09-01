@@ -1,7 +1,8 @@
+-- drop database db_inventario;
 create database db_inventario;
 use db_inventario;
 
-create table Departamento(
+/* create table Departamento(
 	idDepartamento int not null identity primary key,
 	nombreDepartemento varchar(100) not null,
 );
@@ -12,37 +13,84 @@ create table Municipio(
 	idDepartamento int not null constraint fk_departamento_municipio
 	foreign key references Departamento(idDepartamento)
 );
+*/
 
 create table Pais(
 	idPais int not null identity primary key,
 	nombrePais varchar(100) not null
 );
 
+create table Region(
+	idRegion int not null identity primary key,
+	nombreRegion varchar(10) not null,
+	idPais int not null constraint FK_Pais_Region
+	foreign key references Pais(idPais)
+);
+
+create table HUB(
+	idHUB int not null identity primary key,
+	nombreHUB varchar(3) not null,
+	idRegion int not null constraint FK_Region_HUB
+	foreign key references Region(idRegion),
+	idPais int not null constraint FK_Pais_HUB
+	foreign key references Pais(idPais)
+);
+
 create table Sede(
 	idSede int not null identity primary key,
 	nombreSede varchar(100) not null,
 	direccionSede varchar(100) not null,
-	idPais int not null constraint fk_pais_sede
+	idPais int not null constraint FK_Pais_Sede
 	foreign key references Pais(idPais),
-	idDepartamento int not null constraint fk_departamento_sede
-	foreign key references Departamento(idDepartamento),
-	idMunicipio int not null constraint fk_municipio_sede
-	foreign key references Municipio (idMunicipio)
+	idRegion int not null constraint FK_Region_Sede
+	foreign key references Region(idRegion),
+	idHUB int not null constraint FK_HUB_Sede
+	foreign key references HUB (idHUB)
+);
+
+create table DepartamentoEmpleado(
+	idDepartamentoEmpleado int not null identity primary key,
+	nombreDepartamentoEmpleado varchar(100) not null,
+	descripcionDepartamentoEmpleado varchar(100) not null
+);
+
+create table AreaEmpleado(
+	idAreaEmpleado int not null identity primary key,
+	nombreAreaEmpleado varchar(100) not null,
+	descripcionAreaEmpleado varchar(100) not null,
+	idDepartamentoEmpleado int not null constraint FK_DepartamentoEmpleado_AreaEmpleado
+	foreign key references DepartamentoEmpleado (idDepartamentoEmpleado)
+);
+
+create table PuestoEmpleado(
+	idPuestoEmpleado int not null  identity primary key,
+	nombrePuestoEmpleado varchar(100) not null,
+	descripcionPuestoEmpleado varchar(100) not null
 );
 
 create table Empleado(
-	idEmpleado int not null identity primary key,
+	idEmpleado int not null primary key,
+	numeroDeFicha int not null,
+	idPuestoEmpleado int not null constraint FK_PuestoEmpleado_Empleado
+	foreign key references PuestoEmpleado(idPuestoEmpleado),
 	nombreEmpleado varchar(100) not null,
-	puestoEmpleado varchar(100) not null,
-	idSede int not null constraint fk_sede_empleado
-	foreign key references Sede(idSede)
+	telefonoEmpleado varchar(20) not null,
+	correoElectronico varchar(50) not null,
+	idDepartamentoEmpleado int not null constraint FK_DepartamentoEmpleado_Empleado
+	foreign key references DepartamentoEmpleado(idDepartamentoEmpleado),
+	idAreaEmpleado int not null constraint FK_AreaEmpleado_Empleado
+	foreign key references AreaEmpleado(idAreaEmpleado),
+	idRegion int not null constraint FK_Region_Empleado
+	foreign key references Region(idRegion),
+	idHUB int not null constraint FK_HUB_Empleado
+	foreign key references HUB(idHUB)
 );
 
 create table Usuario(
 	idUsuario int not null identity primary key,
 	usuario varchar(20) not null,
 	pass varchar (15) not null,
-	idEmpleado int not null constraint fk_empleado_usuario
+	idEmpleado int not null constraint FK_Empleado_Usuario
 	foreign key references Empleado(idEmpleado)
 );
 
@@ -60,7 +108,7 @@ create table Oficina(
 	idOficina int not null identity primary key,
 	nombreOficina varchar(100) not null,
 	descripcionOficina varchar(100) not null,
-	nivelOficina varchar(20) not null,
+	nivelOficina varchar(10) not null,
 	idEdificio int not null constraint fk_edificio_oficina
 	foreign key references Edificio(idEdificio)
 );
@@ -76,33 +124,27 @@ create table TipoDeEquipo(
 	nombreTipoDeEquipo varchar(100) not null,
 	descripcion varchar(100) not null,
 	stock int not null,
-	idMarca int not null constraint fk_marca_tipodeequipo
+	idMarca int not null constraint FK_Marca_TipoDeEquipo
 	foreign key references Marca(idMarca)
-);
-
-create table Proveedor(
-	idProveedor int not null identity primary key,
-	nombreProveedor varchar(100) not null,
-	direccionProveedor varchar(100) not null
-);
-create table Compras(
-	idCompras int not null identity primary key,
-	fechaDeCompra date not null,
-	cantidad int not null,
-	montoTotal money not null,
-	idTipoDeEquipo int not null constraint fk_tipodeequipo_compras
-	foreign key references TipoDeEquipo (idTipoDeEquipo),
-	idProveedor int not null constraint fk_proveedor_compras
-	foreign key references Proveedor (idProveedor)
 );
 
 create table Equipo(
 	idEquipo int not null identity primary key,
+	numeroDeSerie varchar(50) not null,
 	estado varchar(10) not null,
-	idTipoDeEquipo int not null constraint fk_tipodeequipo_equipo
+	idTipoDeEquipo int not null constraint FK_TipoDeEquipo_Equipo
 	foreign key references TipoDeEquipo(idTipoDeEquipo),
-	idOficina int not null constraint fk_oficina_equipo
+	idOficina int not null constraint FK_Oficina_Equipo
 	foreign key references Oficina(idOficina)
+);
+
+create table PropietarioEquipo(
+	idPropietarioEquipo int not null identity primary key,
+	idEmpleado int not null constraint FK_Empleado_PropietarioEquipo
+	foreign key references Empleado(idEmpleado),
+	idEquipo int not null constraint FK_Equipo_PropietarioEquipo
+	foreign key references Equipo(idEquipo),
+	fechaDeEntrega date not null
 );
 
 create table ReporteEquipo(
