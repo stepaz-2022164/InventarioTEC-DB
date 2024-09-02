@@ -1,6 +1,6 @@
 -- drop database db_inventario;
-create database db_inventario;
-use db_inventario;
+create database DB_InventarioTEC;
+use DB_InventarioTEC;
 
 /* create table Departamento(
 	idDepartamento int not null identity primary key,
