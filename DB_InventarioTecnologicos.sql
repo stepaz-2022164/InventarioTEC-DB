@@ -88,8 +88,8 @@ create table Empleado(
 
 create table Usuario(
 	idUsuario int not null identity primary key,
-	usuario varchar(20) not null,
-	pass varchar (15) not null,
+	usuario varchar(10) not null,
+	pass varchar (10) not null,
 	idEmpleado int not null constraint FK_Empleado_Usuario
 	foreign key references Empleado(idEmpleado)
 );
@@ -132,6 +132,7 @@ create table Equipo(
 	idEquipo int not null identity primary key,
 	numeroDeSerie varchar(50) not null,
 	estado varchar(10) not null,
+	fechaDeIngreso date not null,
 	idTipoDeEquipo int not null constraint FK_TipoDeEquipo_Equipo
 	foreign key references TipoDeEquipo(idTipoDeEquipo),
 	idOficina int not null constraint FK_Oficina_Equipo
