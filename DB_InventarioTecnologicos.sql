@@ -36,6 +36,7 @@ create table HUB(
 	foreign key references Pais(idPais)
 );
 
+/*
 create table Sede(
 	idSede int not null identity primary key,
 	nombreSede varchar(100) not null,
@@ -47,6 +48,7 @@ create table Sede(
 	idHUB int not null constraint FK_HUB_Sede
 	foreign key references HUB (idHUB)
 );
+*/ 
 
 create table DepartamentoEmpleado(
 	idDepartamentoEmpleado int not null identity primary key,
@@ -104,6 +106,7 @@ create table Edificio(
 	foreign key references Sede(idSede)
 );
 
+/*
 create table Oficina(
 	idOficina int not null identity primary key,
 	nombreOficina varchar(100) not null,
@@ -118,6 +121,7 @@ create table Marca(
 	nombreMarca varchar(100) not null,
 	descripcion varchar(100) not null
 );
+*/
 
 create table TipoDeEquipo(
 	idTipoDeEquipo int not null identity primary key,
@@ -135,8 +139,8 @@ create table Equipo(
 	fechaDeIngreso date not null,
 	idTipoDeEquipo int not null constraint FK_TipoDeEquipo_Equipo
 	foreign key references TipoDeEquipo(idTipoDeEquipo),
-	idOficina int not null constraint FK_Oficina_Equipo
-	foreign key references Oficina(idOficina)
+	idHUB int not null constraint FK_HUB_Equipo
+	foreign key references HUB(idHUB)
 );
 
 create table PropietarioEquipo(
