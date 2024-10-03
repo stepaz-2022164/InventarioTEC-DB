@@ -115,8 +115,22 @@ INSERT INTO AreasEmpleados VALUES('Desarrollo', 'Area encargada del desarrollo d
 INSERT INTO AreasEmpleados VALUES('Proyectos', 'Area encargada del la gestión e implementación de proyectos', 7, 1)
 INSERT INTO AreasEmpleados VALUES('Soporte', 'Area encargada del soporte a diferentes problemas relacionados con tecnología', 7, 1)
 
-SELECT * from AreasEmpleados;
-
 INSERT INTO Usuarios VALUES ('stepaz', '123456', 1);
+
+INSERT INTO Sedes VALUES ('Sede Ejemplo', 'Direccion 123', 1, 1, 10, 1);
+
+INSERT INTO PuestosEmpleados VALUES ('Desarrollador Backend', 'Desarrollador backend en el desarrollo de proyectos', 42, 1);
+
+INSERT INTO Empleados VALUES (9000078, 'Sergio Tepaz', '40605562', 'sergio.tepaz2005@gmail.com', 7, 42, 1, 1, 1);
+
+INSERT INTO Marcas VALUES ('Dell', 'Marca de computadoras de escritorio y portatiles', 1);
+
+INSERT INTO TiposDeEquipos VALUES ('Laptop Dell Latitude 4440', 'Laptop marca dell', 1, 1);
+
+INSERT INTO Equipos VALUES ('EFC56789', 'Nuevo', '2024-09-13', 1, 1);
+
+INSERT INTO PropietarioEquipos VALUES (1, 1, '2024-09-04', 1);
+
+INSERT INTO ReporteEquipos VALUES ('2024-09-25', 'Pantalla dañada por golpe', 1, 1);
 -- SELECT * FROM Sedes;
 -- UPDATE Sedes SET estado = 1 WHERE idSede = 2;
