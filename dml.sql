@@ -129,7 +129,7 @@ INSERT INTO TiposDeEquipos VALUES ('Laptop Dell Latitude 4440', 'Laptop marca de
 
 INSERT INTO Equipos VALUES ('EFC56789', 'Nuevo', '2024-09-13', 1, 1);
 
-INSERT INTO PropietarioEquipos VALUES (1, 1, '2024-09-04', 1);
+INSERT INTO PropietarioEquipos VALUES (1, 1, 1, 1,'2024-09-04', 1);
 
 INSERT INTO ReporteEquipos VALUES ('2024-09-25', 'Pantalla dañada por golpe', 1, 1);
 -- SELECT * FROM Sedes;
